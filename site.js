@@ -69,7 +69,7 @@
   menu?.addEventListener('click', () => setMenu(!menuOpen()));
   nav && $$('a', nav).forEach(a => a.addEventListener('click', () => setMenu(false)));
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && menuOpen()) setMenu(false, true); });
-  matchMedia('(min-width: 1001px)').addEventListener('change', e => { if (e.matches) setMenu(false); });
+  matchMedia('(min-width: 1121px)').addEventListener('change', e => { if (e.matches) setMenu(false); });
 
   $$('.header-search').forEach(form => {
     const input = $('input', form);
@@ -137,6 +137,108 @@
     });
     apply();
     if (filter.value) cards.forEach(c => c.classList.add('is-in'));
+  }
+
+  /* ---- Minorista: diapositivas del hero ------------------------------------ */
+  const mHero = $('.m-hero');
+  if (mHero) {
+    const slides = $$('.m-slide', mHero), dots = $$('.m-dots button', mHero);
+    let cur = slides.findIndex(s => s.classList.contains('is-active'));
+    function go(i, focusDot) {
+      i = (i + slides.length) % slides.length;
+      if (i === cur) return;
+      slides[cur].classList.remove('is-active'); slides[cur].inert = true;
+      slides[i].classList.add('is-active'); slides[i].inert = false;
+      dots.forEach((d, k) => d.setAttribute('aria-pressed', String(k === i)));
+      mHero.classList.toggle('is-dark', slides[i].classList.contains('m-slide--dark'));
+      cur = i;
+      if (focusDot) dots[i].focus();
+    }
+    dots.forEach((d, k) => {
+      d.addEventListener('click', () => go(k));
+      d.addEventListener('keydown', e => {
+        if (e.key === 'ArrowRight') { e.preventDefault(); go(cur + 1, true); }
+        if (e.key === 'ArrowLeft') { e.preventDefault(); go(cur - 1, true); }
+      });
+    });
+    /* Deslizar con el dedo: decide con un umbral, no sigue al dedo. */
+    let sx = null, sy = 0;
+    mHero.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') { sx = e.clientX; sy = e.clientY; } });
+    mHero.addEventListener('pointerup', e => {
+      if (sx === null) return;
+      const dx = e.clientX - sx, dy = e.clientY - sy; sx = null;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.4) go(cur + (dx < 0 ? 1 : -1));
+    });
+    mHero.addEventListener('pointercancel', () => { sx = null; });
+  }
+
+  /* ---- Minorista: marcas con flechas ---------------------------------------- */
+  const brandTrack = $('#m-brand-track');
+  if (brandTrack) {
+    const row = brandTrack.closest('.m-brand-row');
+    const arrows = $$('.m-arrow', row);
+    const update = () => {
+      const max = brandTrack.scrollWidth - brandTrack.clientWidth;
+      row.classList.toggle('fits', max <= 2);
+      arrows[0].disabled = brandTrack.scrollLeft <= 2;
+      arrows[1].disabled = brandTrack.scrollLeft >= max - 2;
+    };
+    arrows.forEach(a => a.addEventListener('click', () =>
+      brandTrack.scrollBy({ left: Number(a.dataset.dir) * brandTrack.clientWidth * .8, behavior: reduce.matches ? 'auto' : 'smooth' })));
+    brandTrack.addEventListener('scroll', update, { passive: true });
+    addEventListener('resize', update);
+    update();
+  }
+
+  /* ---- Minorista: ficha de rubro, búsqueda y consulta por Instagram -------- */
+  const dlg = $('#rubro-dialog');
+  if (dlg) {
+    const RUBROS = {
+      celulares: { t: 'Celulares y tablets', img: ['fundas-en-mano', 'interior'], txt: 'Equipos y accesorios para celulares y tablets. Consultá modelos y disponibilidad en cada local.', kw: 'celulares celular tablets tablet telefonos telefono iphone equipos' },
+      cargadores: { t: 'Cables y cargadores', img: ['cargadores', 'cables'], txt: 'Cargadores rápidos, cables USB-C y Lightning, cargadores de auto y cargadores portátiles.', kw: 'cables cable cargador cargadores usb tipo c lightning auto power bank portatil inalambrico' },
+      audio: { t: 'Audio', img: ['auriculares', 'parlantes'], txt: 'Auriculares, parlantes y manos libres de las marcas que trabajamos, SOUL entre ellas.', kw: 'audio auriculares auricular parlante parlantes bluetooth manos libres sonido' },
+      fundas: { t: 'Fundas y protección', img: ['estanterias-fundas', 'fundas-en-mano'], txt: 'Fundas para los modelos más buscados y vidrios templados.', kw: 'fundas funda proteccion vidrio vidrios templado protector carcasa' },
+      smartwatch: { t: 'Smartwatch y wearables', img: ['smartwatch'], txt: 'Relojes inteligentes y mallas para todos los días.', kw: 'smartwatch smart watch reloj relojes malla mallas wearables smartband' },
+      gaming: { t: 'Gaming', img: ['gaming-joystick', 'gaming-kit'], txt: 'Joysticks, teclados, mouses y auriculares gamer.', kw: 'gaming gamer joystick joysticks control teclado teclados mouse mouses consola juegos' },
+    };
+    const normalize = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
+    const consult = $('#rubro-consult'), hint = $('#rubro-hint');
+    let message = '';
+    function open({ key, query }) {
+      const r = key && RUBROS[key];
+      $('#rubro-kicker').textContent = r ? 'RUBRO' : 'BÚSQUEDA';
+      $('#rubro-title').textContent = r ? r.t : `No encontramos “${query}”`;
+      $('#rubro-text').textContent = r ? r.txt : 'Puede que lo tengamos igual. Escribinos y te decimos si hay stock en algún local.';
+      $('#rubro-images').replaceChildren(...(r ? r.img : []).map(src => {
+        const img = new Image(1200, 1200); img.src = `assets/minorista/${src}.webp`; img.alt = ''; return img;
+      }));
+      message = r ? `Hola HTG, quería consultar por ${r.t.toLowerCase()}.` : `Hola HTG, ¿tienen ${query}?`;
+      hint.textContent = '';
+      if (!dlg.open) dlg.showModal();
+    }
+    consult.addEventListener('click', () => {
+      navigator.clipboard?.writeText(message).then(
+        () => { hint.textContent = 'Te copiamos el mensaje: pegalo en el chat de Instagram.'; },
+        () => { hint.textContent = `Escribinos: “${message}”`; });
+    });
+    $$('[data-rubro]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); open({ key: a.dataset.rubro }); }));
+    $('.m-dialog-close', dlg).addEventListener('click', () => dlg.close());
+    $$('[data-close]', dlg).forEach(a => a.addEventListener('click', () => dlg.close()));
+    dlg.addEventListener('click', e => {
+      if (e.target !== dlg) return;
+      const r = dlg.getBoundingClientRect();
+      if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) dlg.close();
+    });
+    /* Llegadas con ?rubro= o desde el buscador (?q=) */
+    const params = new URLSearchParams(location.search);
+    const q = (params.get('q') || '').trim();
+    if (params.get('rubro') in RUBROS) open({ key: params.get('rubro') });
+    else if (q) {
+      const terms = normalize(q).split(/\s+/);
+      const key = Object.keys(RUBROS).find(k => terms.every(t => normalize(RUBROS[k].t + ' ' + RUBROS[k].kw).includes(t)));
+      open(key ? { key } : { query: q });
+      const input = $('.header-search input'); if (input) input.value = q;
+    }
   }
 
   /* ---- Alta: validación en línea y mensaje listo para mandar --------------- */

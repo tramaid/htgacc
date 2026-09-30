@@ -10,7 +10,9 @@ Luego entrá a `http://localhost:8000/`. No necesita instalación ni build.
 
 ## Recorridos
 
-- Home: navegación por anclas, categorías y destacados.
+- "Minorista" es un ítem más del menú principal, en todas las páginas.
+- Home mayorista (`index.html`): navegación por anclas, categorías y destacados.
+- Minorista (`minorista.html`, estilos en `minorista.css`): hero con 3 diapositivas (puntos, flechas del teclado y deslizar), rubros que abren una ficha con consulta por Instagram (copia el mensaje), buscador propio (`?q=`), enlace directo a un rubro (`?rubro=audio`), marcas con flechas, Instagram, locales y novedades. Sin productos destacados ni precios: el brief define que los precios se ven solo con cuenta.
 - Catálogo: búsqueda de rubros y enlaces con interés precargado para el alta.
 - Alta mayorista: formulario con validación en línea que arma el mensaje de alta, lo copia al portapapeles y abre el chat de Instagram de @htgaccesorios. Si se completa `CONTACTO.whatsapp` en `site.js`, aparece también "Enviar por WhatsApp" con el mensaje precargado. No transmite ni guarda datos.
 
