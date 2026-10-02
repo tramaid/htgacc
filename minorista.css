@@ -124,18 +124,20 @@
 .m-dialog-hint:empty{display:none}
 
 /* ---- Responsive ------------------------------------------------------------ */
-@media(max-width:1250px){.m-main{width:min(100% - 68px,1328px)}.m-cat-grid{gap:12px}.m-cat-label{font-size:15px;padding:14px 12px}.m-benefits>*{padding:6px 14px;gap:12px}}
+@media(max-width:1340px){.m-main{width:min(100% - 68px,1328px)}.m-cat-grid{gap:12px}.m-cat-label{font-size:15px;padding:14px 12px}.m-benefits>*{padding:6px 14px;gap:12px}}
 @media(max-width:1000px){.m-cat-grid{grid-template-columns:repeat(3,1fr)}.m-benefits{grid-template-columns:1fr 1fr;gap:16px 0}.m-benefits>*:nth-child(2){border:0}.m-ig-grid{grid-template-columns:repeat(3,1fr)}.m-locales{grid-template-columns:1fr}.m-pins{min-height:0;justify-content:flex-start;flex-wrap:wrap}.m-pins li{align-self:auto!important}.m-news{flex-wrap:wrap}.m-news .button{margin-left:0}.m-brand-track li{flex-basis:140px}}
 @media(max-width:700px){
   .m-main{width:calc(100% - 32px);padding-top:16px}
   .m-hero{border-radius:20px}
-  .m-slide{min-height:620px;align-items:flex-start}
+  /* La foto ocupa los 300 px de abajo y los puntos van justo encima: el alto
+     lo marca el texto más largo de las tres diapositivas, así nunca se pisan. */
+  .m-slide{min-height:0;align-items:flex-start;padding-bottom:352px}
   .m-slide::before{background-size:auto 300px;background-position:right bottom}
   .m-slide--light{background:#ffd6bd}
-  .m-slide-copy{padding:32px 24px}
+  .m-slide-copy{padding:32px 24px 0}
   .m-slide h1,.m-title{font-size:clamp(44px,13vw,56px)}
   .m-lead{font-size:16px;margin:16px 0 22px}
-  .m-dots{left:12px;bottom:auto;top:320px}
+  .m-dots{left:12px;bottom:302px}
   .m-cat-grid{grid-template-columns:repeat(2,1fr);gap:10px}
   .m-cat{border-radius:14px}
   .m-cat-label{font-size:14px;padding:12px;min-height:66px}
