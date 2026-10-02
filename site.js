@@ -209,8 +209,12 @@
       $('#rubro-kicker').textContent = r ? 'RUBRO' : 'BÚSQUEDA';
       $('#rubro-title').textContent = r ? r.t : `No encontramos “${query}”`;
       $('#rubro-text').textContent = r ? r.txt : 'Puede que lo tengamos igual. Escribinos y te decimos si hay stock en algún local.';
-      $('#rubro-images').replaceChildren(...(r ? r.img : []).map(src => {
-        const img = new Image(1200, 1200); img.src = `assets/minorista/${src}.webp`; img.alt = ''; return img;
+      const imgs = r ? r.img : [];
+      $('#rubro-images').replaceChildren(...imgs.map(src => {
+        const img = new Image(1200, 1200), base = `assets/minorista/${src}`;
+        img.srcset = `${base}-600.webp 600w, ${base}.webp 1200w`;
+        img.sizes = imgs.length > 1 ? '(max-width:760px) 45vw, 330px' : '(max-width:760px) 90vw, 660px';
+        img.src = `${base}.webp`; img.alt = ''; return img;
       }));
       message = r ? `Hola HTG, quería consultar por ${r.t.toLowerCase()}.` : `Hola HTG, ¿tienen ${query}?`;
       hint.textContent = '';
