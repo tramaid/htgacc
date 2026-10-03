@@ -194,12 +194,16 @@
   const dlg = $('#rubro-dialog');
   if (dlg) {
     const RUBROS = {
+      cargadores: { t: 'Cables y cargadores', img: ['cargadores', 'cables'], txt: 'Cargadores rápidos, cables USB-C y Lightning, cargadores de auto, power banks, bases de carga inalámbrica y adaptadores.', kw: 'cables cable cargador cargadores usb tipo c lightning auto power bank portatil inalambrico base adaptador adaptadores hdmi' },
+      audio: { t: 'Audio', img: ['auriculares', 'parlantes'], txt: 'Auriculares, TWS, parlantes, manos libres y micrófonos de las marcas que trabajamos, SOUL entre ellas.', kw: 'audio auriculares auricular tws parlante parlantes bluetooth manos libres sonido microfono microfonos' },
+      fundas: { t: 'Fundas', img: ['estanterias-fundas', 'fundas-en-mano'], txt: 'Fundas para los modelos más buscados: silicona, antishock, magnéticas y flip covers.', kw: 'fundas funda carcasa carcasas silicona antishock magnetica magneticas flip cover' },
+      pantalla: { t: 'Protección de pantalla', img: ['pantalla'], txt: 'Vidrios templados, protectores de hidrogel y protectores de cámara para cada modelo.', kw: 'vidrio vidrios templado templados hidrogel hydrogel protector protectores pantalla camara lente' },
+      soportes: { t: 'Soportes', img: ['soportes'], txt: 'Soportes para auto, bici y moto, escritorio, notebook y monitor.', kw: 'soporte soportes auto bici moto escritorio tripode notebook monitor holder' },
+      creadores: { t: 'Creadores de contenido', img: ['creadores', 'kit-contenido'], txt: 'Aros de luz, luces LED, trípodes y micrófonos para grabar y hacer streaming.', kw: 'creadores contenido aro luz ring led selfie tripode streaming vlog' },
+      gaming: { t: 'Gaming', img: ['gaming-joystick', 'gaming-kit'], txt: 'Joysticks, teclados, mouses, auriculares y sillas gamer.', kw: 'gaming gamer joystick joysticks control consola juegos silla sillas' },
+      oficina: { t: 'Computación y oficina', img: ['oficina'], txt: 'Teclados, mouses, combos, webcams y mochilas para la compu y la oficina.', kw: 'computacion oficina office pc teclado teclados mouse mouses combo webcam mochila mochilas notebook' },
+      smartwatch: { t: 'Smartwatch y wearables', img: ['smartwatch'], txt: 'Relojes inteligentes, smart bands, smart rings y mallas para todos los días.', kw: 'smartwatch smart watch reloj relojes malla mallas wearables smartband smart ring' },
       celulares: { t: 'Celulares y tablets', img: ['fundas-en-mano', 'interior'], txt: 'Equipos y accesorios para celulares y tablets. Consultá modelos y disponibilidad en cada local.', kw: 'celulares celular tablets tablet telefonos telefono iphone equipos' },
-      cargadores: { t: 'Cables y cargadores', img: ['cargadores', 'cables'], txt: 'Cargadores rápidos, cables USB-C y Lightning, cargadores de auto y cargadores portátiles.', kw: 'cables cable cargador cargadores usb tipo c lightning auto power bank portatil inalambrico' },
-      audio: { t: 'Audio', img: ['auriculares', 'parlantes'], txt: 'Auriculares, parlantes y manos libres de las marcas que trabajamos, SOUL entre ellas.', kw: 'audio auriculares auricular parlante parlantes bluetooth manos libres sonido' },
-      fundas: { t: 'Fundas y protección', img: ['estanterias-fundas', 'fundas-en-mano'], txt: 'Fundas para los modelos más buscados y vidrios templados.', kw: 'fundas funda proteccion vidrio vidrios templado protector carcasa' },
-      smartwatch: { t: 'Smartwatch y wearables', img: ['smartwatch'], txt: 'Relojes inteligentes y mallas para todos los días.', kw: 'smartwatch smart watch reloj relojes malla mallas wearables smartband' },
-      gaming: { t: 'Gaming', img: ['gaming-joystick', 'gaming-kit'], txt: 'Joysticks, teclados, mouses y auriculares gamer.', kw: 'gaming gamer joystick joysticks control teclado teclados mouse mouses consola juegos' },
     };
     const normalize = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
     const consult = $('#rubro-consult'), hint = $('#rubro-hint');

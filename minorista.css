@@ -33,7 +33,7 @@
 
 /* ---- Rubros ---------------------------------------------------------------- */
 .m-cats{margin-top:24px}
-.m-cat-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}
+.m-cat-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
 .m-cat{display:flex;flex-direction:column;background:var(--m-card);border-radius:18px;overflow:hidden}
 .m-cat img{width:100%;height:auto;aspect-ratio:1;object-fit:cover;transition:transform .5s var(--ease)}
 .m-cat:hover img{transform:scale(1.05)}
@@ -125,7 +125,7 @@
 
 /* ---- Responsive ------------------------------------------------------------ */
 @media(max-width:1340px){.m-main{width:min(100% - 68px,1328px)}.m-cat-grid{gap:12px}.m-cat-label{font-size:15px;padding:14px 12px}.m-benefits>*{padding:6px 14px;gap:12px}}
-@media(max-width:1000px){.m-cat-grid{grid-template-columns:repeat(3,1fr)}.m-benefits{grid-template-columns:1fr 1fr;gap:16px 0}.m-benefits>*:nth-child(2){border:0}.m-ig-grid{grid-template-columns:repeat(3,1fr)}.m-locales{grid-template-columns:1fr}.m-pins{min-height:0;justify-content:flex-start;flex-wrap:wrap}.m-pins li{align-self:auto!important}.m-news{flex-wrap:wrap}.m-news .button{margin-left:0}.m-brand-track li{flex-basis:140px}}
+@media(max-width:1000px){.m-cat-grid{grid-template-columns:repeat(5,1fr);gap:10px}.m-cat-label{font-size:13px;padding:12px 10px}.m-benefits{grid-template-columns:1fr 1fr;gap:16px 0}.m-benefits>*:nth-child(2){border:0}.m-ig-grid{grid-template-columns:repeat(3,1fr)}.m-locales{grid-template-columns:1fr}.m-pins{min-height:0;justify-content:flex-start;flex-wrap:wrap}.m-pins li{align-self:auto!important}.m-news{flex-wrap:wrap}.m-news .button{margin-left:0}.m-brand-track li{flex-basis:140px}}
 @media(max-width:700px){
   .m-main{width:calc(100% - 32px);padding-top:16px}
   .m-hero{border-radius:20px}
@@ -174,3 +174,10 @@
   .m-cat:hover img,.m-ig-grid a:hover img{transform:none}
   .m-brand-track{scroll-behavior:auto}
 }
+
+/* ---- Locales: cuatro puntos, Arana primero (03/10/2026) -------------------- */
+.m-pins{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;min-height:0;align-content:center}
+.m-pins li{align-self:auto!important}
+.m-pins em{display:block;font-style:normal;font-size:12px;font-weight:700;letter-spacing:.06em;line-height:1.2;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+.m-pins .is-main em{color:var(--orange-text)}
+@media(max-width:700px){.m-pins{grid-template-columns:1fr}}
