@@ -181,3 +181,20 @@
 .m-pins em{display:block;font-style:normal;font-size:12px;font-weight:700;letter-spacing:.06em;line-height:1.2;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
 .m-pins .is-main em{color:var(--orange-text)}
 @media(max-width:700px){.m-pins{grid-template-columns:1fr}}
+
+/* ---- Encabezado claro: separa Minorista de Mayorista (03/10/2026) ---------- */
+.page-minorista .channel-bar{background:var(--m-card);color:var(--ink);border-bottom-color:var(--line)}
+.page-minorista .channel-tabs{border-color:#d6ccc2}
+.page-minorista .channel-tabs a{color:var(--muted)}
+.page-minorista .channel-tabs a:hover{color:var(--ink)}
+.page-minorista .channel-tabs a[aria-current]{background:var(--ink);color:#fff}
+.page-minorista .channel-note{color:var(--muted)}
+.page-minorista .site-header{background:#fff;color:var(--ink);border-bottom:1px solid var(--line)}
+.page-minorista .site-header.is-scrolled{box-shadow:0 12px 30px -18px rgba(0,0,0,.28)}
+.page-minorista .identity-side{border-left-color:var(--line)}
+.page-minorista .identity-side small{color:var(--muted)}
+.page-minorista .main-nav a:hover{color:var(--orange-text)}
+.page-minorista .header-search{background:var(--m-card)}
+.page-minorista .menu-toggle span{background:var(--ink)}
+@media(max-width:1120px){.page-minorista .main-nav{background:#fff;box-shadow:0 15px 22px rgba(0,0,0,.12)}.page-minorista .main-nav a{border-bottom-color:var(--line)}.page-minorista .main-nav .mobile-nav-cta{color:var(--orange-text)}}
+@media(max-width:700px){.page-minorista .header-search{background:transparent}.page-minorista .header-search button{color:var(--ink)}.page-minorista .header-search input{border-bottom:1px solid var(--line)}}
