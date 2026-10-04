@@ -203,6 +203,7 @@
       gaming: { t: 'Gaming', img: ['cat-gaming', 'gaming-kit'], txt: 'Joysticks, teclados, mouses, auriculares y sillas gamer.', kw: 'gaming gamer joystick joysticks control consola juegos silla sillas' },
       oficina: { t: 'Computación y oficina', img: ['cat-oficina'], txt: 'Teclados, mouses, combos, webcams y mochilas para la compu y la oficina.', kw: 'computacion oficina office pc teclado teclados mouse mouses combo webcam mochila mochilas notebook' },
       smartwatch: { t: 'Smartwatch y wearables', img: ['cat-smartwatch'], txt: 'Relojes inteligentes, smart bands, smart rings y mallas para todos los días.', kw: 'smartwatch smart watch reloj relojes malla mallas wearables smartband smart ring' },
+      soul: { t: 'SOUL', img: ['soul-mostrador', 'soul-fachada'], txt: 'Somos distribuidores oficiales SOUL: auriculares, parlantes, cargadores, cables, soportes, gaming y más, con garantía oficial.', kw: 'soul' },
       celulares: { t: 'Celulares y tablets', img: ['cat-celulares', 'interior'], txt: 'Equipos y accesorios para celulares y tablets. Consultá modelos y disponibilidad en cada local.', kw: 'celulares celular tablets tablet telefonos telefono iphone equipos' },
     };
     const normalize = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
