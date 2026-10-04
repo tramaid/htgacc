@@ -172,6 +172,24 @@
     mHero.addEventListener('pointercancel', () => { sx = null; });
   }
 
+  /* ---- Carrusel de rubros (mayorista y minorista) --------------------------- */
+  [['#cat-track', '.cat-arrow'], ['#m-cat-track', '.m-cat-arrow']].forEach(([sel, arrowSel]) => {
+    const track = $(sel);
+    if (!track) return;
+    const arrows = $(arrowSel);
+    const update = () => {
+      const max = track.scrollWidth - track.clientWidth;
+      arrows.forEach(a => { a.hidden = max <= 2; });
+      arrows[0].disabled = track.scrollLeft <= 2;
+      arrows[1].disabled = track.scrollLeft >= max - 2;
+    };
+    arrows.forEach(a => a.addEventListener('click', () =>
+      track.scrollBy({ left: Number(a.dataset.dir) * track.clientWidth * .8, behavior: reduce.matches ? 'auto' : 'smooth' })));
+    track.addEventListener('scroll', update, { passive: true });
+    addEventListener('resize', update);
+    update();
+  });
+
   /* ---- Minorista: marcas con flechas ---------------------------------------- */
   const brandTrack = $('#m-brand-track');
   if (brandTrack) {
