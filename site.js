@@ -7,7 +7,7 @@
 
   /* Canales de contacto. Instagram está confirmado; el WhatsApp central se
      completa cuando HTG lo pase (formato internacional: 5491112345678). */
-  const CONTACTO = { instagram: 'htgaccesorios', whatsapp: '' };
+  const CONTACTO = { instagram: 'htgaccesorios', whatsapp: '', email: '' }; // completar whatsapp (solo números, 549…) y email cuando lleguen
 
   /* ---- Motor de movimiento (motor TRAMA recortado) --------------------------
      Un solo requestAnimationFrame para todo lo continuo. A diferencia del motor
@@ -237,6 +237,58 @@
     $('#copy-again')?.addEventListener('click', async e => {
       const ok = await copy(output.value);
       e.currentTarget.textContent = ok ? 'Copiado' : 'Seleccioná y copiá el texto';
+    });
+  }
+
+  /* ---- Botón de arrepentimiento: código de gestión en el momento ------------ */
+  const arrep = $('#arrep-form');
+  if (arrep) {
+    const AMSG = {
+      nombre: 'Escribí tu nombre y apellido.', email: 'Necesitamos un correo válido para responderte.',
+      telefono: 'Dejanos un teléfono con código de área.', fecha: 'Indicá la fecha en que recibiste el producto.',
+      producto: 'Contanos qué producto compraste.',
+    };
+    const req = $$('[required]', arrep);
+    const err = f => {
+      const v = f.value.trim();
+      if (!v) return AMSG[f.name];
+      if (f.name === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) return AMSG.email;
+      if (f.name === 'telefono' && v.replace(/\D/g, '').length < 8) return AMSG.telefono;
+      return '';
+    };
+    const mark = (f, msg) => { f.setAttribute('aria-invalid', msg ? 'true' : 'false'); const o = $('#ae-' + f.name); if (o) o.textContent = msg; };
+    req.forEach(f => f.addEventListener('blur', () => { if (f.value) mark(f, err(f)); }));
+    arrep.addEventListener('submit', async e => {
+      e.preventDefault();
+      let first = null;
+      req.forEach(f => { const m = err(f); mark(f, m); if (m && !first) first = f; });
+      if (first) { $('#arrep-status').textContent = 'Revisá los campos marcados.'; first.focus(); return; }
+      const d = new FormData(arrep), now = new Date();
+      const p2 = n => String(n).padStart(2, '0');
+      const code = 'HTG-ARR-' + String(now.getFullYear()).slice(2) + p2(now.getMonth() + 1) + p2(now.getDate()) + '-' +
+        Array.from(crypto.getRandomValues(new Uint8Array(3)), b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
+      const text = [
+        'Solicitud de arrepentimiento de compra (Ley 24.240, art. 34)', 'Código de gestión: ' + code,
+        'Fecha de la solicitud: ' + now.toLocaleString('es-AR'), '',
+        'Nombre: ' + d.get('nombre').trim(), 'Correo: ' + d.get('email').trim(), 'Teléfono: ' + d.get('telefono').trim(),
+        'Producto: ' + d.get('producto').trim(), 'Recibido el: ' + d.get('fecha'),
+        ...(d.get('comprobante').trim() ? ['Comprobante o pedido: ' + d.get('comprobante').trim()] : []),
+        ...(d.get('motivo').trim() ? ['Motivo: ' + d.get('motivo').trim()] : []),
+      ].join('\n');
+      $('#arrep-code').textContent = code;
+      $('#arrep-message').value = text;
+      const mail = $('#arrep-mail'), wa = $('#arrep-whatsapp'), dl = $('#arrep-download');
+      if (CONTACTO.email) { mail.href = 'mailto:' + CONTACTO.email + '?subject=' + encodeURIComponent('Arrepentimiento ' + code) + '&body=' + encodeURIComponent(text); mail.hidden = false; }
+      if (CONTACTO.whatsapp) { wa.href = 'https://wa.me/' + CONTACTO.whatsapp + '?text=' + encodeURIComponent(text); wa.hidden = false; }
+      URL.revokeObjectURL(dl.href);
+      dl.href = URL.createObjectURL(new Blob([text], { type: 'text/plain;charset=utf-8' }));
+      arrep.hidden = true;
+      $('#arrep-done').hidden = false;
+      try { await navigator.clipboard.writeText(text); $('#arrep-lead').textContent = 'Guardalo. La solicitud ya está copiada: mandánosla por alguno de estos medios para que la recibamos y coordinemos la devolución.'; } catch {}
+      $('#arrep-done h2').focus();
+    });
+    $('#arrep-copy').addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText($('#arrep-message').value); $('#arrep-copy').textContent = 'Copiada'; } catch { $('#arrep-message').select(); }
     });
   }
 })();
