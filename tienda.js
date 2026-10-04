@@ -64,7 +64,7 @@
   if (ficha) {
     const p = P.find(x => x.id === params.get('id'));
     if (!p) {
-      ficha.innerHTML = `<div class="shop-empty"><b>No encontramos ese producto.</b><p>Puede que ya no esté en la web.</p><a class="button button-orange" href="${pag.cat}">Ver el catálogo <span aria-hidden="true">→</span></a></div>`;
+      ficha.innerHTML = `<div class="shop-empty"><h1 class="shop-empty-title">No encontramos ese producto.</h1><p>Puede que ya no esté en la web.</p><a class="button button-orange" href="${pag.cat}">Ver el catálogo <span aria-hidden="true">→</span></a></div>`;
       return;
     }
     const r = R[p.cat] || { t: '' };

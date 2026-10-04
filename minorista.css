@@ -186,8 +186,8 @@
 .page-minorista .channel-switch{background:var(--m-card);border-color:#d6ccc2}.page-minorista .channel-switch a{color:var(--muted)}.page-minorista .channel-switch a:hover{color:var(--ink);background:#e8e1da}.page-minorista .channel-switch a[aria-current]{background:var(--ink);color:#fff}
 .page-minorista .site-header{background:#fff;color:var(--ink);border-bottom:1px solid var(--line)}
 .page-minorista .site-header.is-scrolled{box-shadow:0 12px 30px -18px rgba(0,0,0,.28)}
-.page-minorista .identity-side{border-left-color:var(--line)}
-.page-minorista .identity-side small{color:var(--muted)}
+.page-minorista .site-header .identity-side{border-left-color:var(--line)}
+.page-minorista .site-header .identity-side small{color:var(--muted)}
 .page-minorista .main-nav a:hover{color:var(--orange-text)}
 .page-minorista .header-search{background:var(--m-card)}
 .page-minorista .menu-toggle span{background:var(--ink)}
