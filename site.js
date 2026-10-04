@@ -104,41 +104,6 @@
 
   Motion.revealOnce();
 
-  /* ---- Catálogo: filtro por rubro con transición compartida ---------------- */
-  const filter = $('#catalog-filter');
-  if (filter) {
-    const cards = $$('.catalog-card');
-    const empty = $('#catalog-empty');
-    const emptyTerm = $('#catalog-empty-term');
-    const count = $('#catalog-count');
-    const params = new URLSearchParams(location.search);
-    filter.value = params.get('q') || params.get('categoria') || '';
-    const normalize = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
-    cards.forEach((c, i) => c.style.viewTransitionName = 'rubro-' + i);
-    function apply() {
-      const terms = normalize(filter.value).split(/\s+/).filter(Boolean);
-      let n = 0;
-      cards.forEach(card => {
-        const hay = normalize(card.dataset.category + ' ' + card.textContent);
-        const show = !terms.length || terms.every(t => hay.includes(t));
-        card.hidden = !show; if (show) n++;
-      });
-      empty.hidden = n !== 0;
-      if (emptyTerm) emptyTerm.textContent = filter.value.trim();
-      if (count) count.textContent = n === cards.length ? `${n} rubros` : n === 1 ? '1 rubro encontrado' : `${n} rubros encontrados`;
-    }
-    let t = 0;
-    filter.addEventListener('input', () => {
-      clearTimeout(t);
-      t = setTimeout(() => {
-        if (!document.startViewTransition || reduce.matches) return apply();
-        document.startViewTransition(apply);
-      }, 140);
-    });
-    apply();
-    if (filter.value) cards.forEach(c => c.classList.add('is-in'));
-  }
-
   /* ---- Minorista: diapositivas del hero ------------------------------------ */
   const mHero = $('.m-hero');
   if (mHero) {
@@ -200,66 +165,6 @@
       marquee.classList.toggle('is-paused', paused);
     });
   });
-
-  /* ---- Minorista: ficha de rubro, búsqueda y consulta por Instagram -------- */
-  const dlg = $('#rubro-dialog');
-  if (dlg) {
-    const RUBROS = {
-      cargadores: { t: 'Cables y cargadores', img: ['cat-cargadores', 'cables'], txt: 'Cargadores rápidos, cables USB-C y Lightning, cargadores de auto, power banks, bases de carga inalámbrica y adaptadores.', kw: 'cables cable cargador cargadores usb tipo c lightning auto power bank portatil inalambrico base adaptador adaptadores hdmi' },
-      audio: { t: 'Audio', img: ['cat-audio', 'parlantes'], txt: 'Auriculares, TWS, parlantes, manos libres y micrófonos de las marcas que trabajamos, SOUL entre ellas.', kw: 'audio auriculares auricular tws parlante parlantes bluetooth manos libres sonido microfono microfonos' },
-      fundas: { t: 'Fundas', img: ['cat-fundas', 'estanterias-fundas'], txt: 'Fundas para los modelos más buscados: silicona, antishock, magnéticas y flip covers.', kw: 'fundas funda carcasa carcasas silicona antishock magnetica magneticas flip cover' },
-      pantalla: { t: 'Protección de pantalla', img: ['cat-pantalla'], txt: 'Vidrios templados, protectores de hidrogel y protectores de cámara para cada modelo.', kw: 'vidrio vidrios templado templados hidrogel hydrogel protector protectores pantalla camara lente' },
-      soportes: { t: 'Soportes', img: ['cat-soportes'], txt: 'Soportes para auto, bici y moto, escritorio, notebook y monitor.', kw: 'soporte soportes auto bici moto escritorio tripode notebook monitor holder' },
-      creadores: { t: 'Creadores de contenido', img: ['cat-creadores', 'kit-contenido'], txt: 'Aros de luz, luces LED, trípodes y micrófonos para grabar y hacer streaming.', kw: 'creadores contenido aro luz ring led selfie tripode streaming vlog' },
-      gaming: { t: 'Gaming', img: ['cat-gaming', 'gaming-kit'], txt: 'Joysticks, teclados, mouses, auriculares y sillas gamer.', kw: 'gaming gamer joystick joysticks control consola juegos silla sillas' },
-      oficina: { t: 'Computación y oficina', img: ['cat-oficina'], txt: 'Teclados, mouses, combos, webcams y mochilas para la compu y la oficina.', kw: 'computacion oficina office pc teclado teclados mouse mouses combo webcam mochila mochilas notebook' },
-      smartwatch: { t: 'Smartwatch y wearables', img: ['cat-smartwatch'], txt: 'Relojes inteligentes, smart bands, smart rings y mallas para todos los días.', kw: 'smartwatch smart watch reloj relojes malla mallas wearables smartband smart ring' },
-      soul: { t: 'SOUL', img: ['soul-mostrador', 'soul-fachada'], txt: 'Somos distribuidores oficiales SOUL: auriculares, parlantes, cargadores, cables, soportes, gaming y más, con garantía oficial.', kw: 'soul' },
-      celulares: { t: 'Celulares y tablets', img: ['cat-celulares', 'interior'], txt: 'Equipos y accesorios para celulares y tablets. Consultá modelos y disponibilidad en cada local.', kw: 'celulares celular tablets tablet telefonos telefono iphone equipos' },
-    };
-    const normalize = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
-    const consult = $('#rubro-consult'), hint = $('#rubro-hint');
-    let message = '';
-    function open({ key, query }) {
-      const r = key && RUBROS[key];
-      $('#rubro-kicker').textContent = r ? 'RUBRO' : 'BÚSQUEDA';
-      $('#rubro-title').textContent = r ? r.t : `No encontramos “${query}”`;
-      $('#rubro-text').textContent = r ? r.txt : 'Puede que lo tengamos igual. Escribinos y te decimos si hay stock en algún local.';
-      const imgs = r ? r.img : [];
-      $('#rubro-images').replaceChildren(...imgs.map(src => {
-        const img = new Image(1200, 1200), base = `assets/minorista/${src}`;
-        img.srcset = `${base}-600.webp 600w, ${base}.webp 1200w`;
-        img.sizes = imgs.length > 1 ? '(max-width:760px) 45vw, 330px' : '(max-width:760px) 90vw, 660px';
-        img.src = `${base}.webp`; img.alt = ''; return img;
-      }));
-      message = r ? `Hola HTG, quería consultar por ${r.t.toLowerCase()}.` : `Hola HTG, ¿tienen ${query}?`;
-      hint.textContent = '';
-      if (!dlg.open) dlg.showModal();
-    }
-    consult.addEventListener('click', () => {
-      navigator.clipboard?.writeText(message).then(
-        () => { hint.textContent = 'Te copiamos el mensaje: pegalo en el chat de Instagram.'; },
-        () => { hint.textContent = `Escribinos: “${message}”`; });
-    });
-    $$('[data-rubro]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); open({ key: a.dataset.rubro }); }));
-    $('.m-dialog-close', dlg).addEventListener('click', () => dlg.close());
-    $$('[data-close]', dlg).forEach(a => a.addEventListener('click', () => dlg.close()));
-    dlg.addEventListener('click', e => {
-      if (e.target !== dlg) return;
-      const r = dlg.getBoundingClientRect();
-      if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) dlg.close();
-    });
-    /* Llegadas con ?rubro= o desde el buscador (?q=) */
-    const params = new URLSearchParams(location.search);
-    const q = (params.get('q') || '').trim();
-    if (params.get('rubro') in RUBROS) open({ key: params.get('rubro') });
-    else if (q) {
-      const terms = normalize(q).split(/\s+/);
-      const key = Object.keys(RUBROS).find(k => terms.every(t => normalize(RUBROS[k].t + ' ' + RUBROS[k].kw).includes(t)));
-      open(key ? { key } : { query: q });
-      const input = $('.header-search input'); if (input) input.value = q;
-    }
-  }
 
   /* ---- Alta: validación en línea y mensaje listo para mandar --------------- */
   const interest = $('#interes');
