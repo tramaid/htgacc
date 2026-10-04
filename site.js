@@ -190,23 +190,16 @@
     update();
   });
 
-  /* ---- Minorista: marcas con flechas ---------------------------------------- */
-  const brandTrack = $('#m-brand-track');
-  if (brandTrack) {
-    const row = brandTrack.closest('.m-brand-row');
-    const arrows = $$('.m-arrow', row);
-    const update = () => {
-      const max = brandTrack.scrollWidth - brandTrack.clientWidth;
-      row.classList.toggle('fits', max <= 2);
-      arrows[0].disabled = brandTrack.scrollLeft <= 2;
-      arrows[1].disabled = brandTrack.scrollLeft >= max - 2;
-    };
-    arrows.forEach(a => a.addEventListener('click', () =>
-      brandTrack.scrollBy({ left: Number(a.dataset.dir) * brandTrack.clientWidth * .8, behavior: reduce.matches ? 'auto' : 'smooth' })));
-    brandTrack.addEventListener('scroll', update, { passive: true });
-    addEventListener('resize', update);
-    update();
-  }
+  /* ---- Marquesina de marcas: botón de pausa (WCAG 2.2.2) ------------------- */
+  $('.marquee-toggle').forEach(btn => {
+    const marquee = btn.closest('section').querySelector('[data-marquee]');
+    btn.addEventListener('click', () => {
+      const paused = btn.getAttribute('aria-pressed') !== 'true';
+      btn.setAttribute('aria-pressed', paused);
+      btn.setAttribute('aria-label', paused ? 'Reanudar la cinta de marcas' : 'Pausar la cinta de marcas');
+      marquee.classList.toggle('is-paused', paused);
+    });
+  });
 
   /* ---- Minorista: ficha de rubro, búsqueda y consulta por Instagram -------- */
   const dlg = $('#rubro-dialog');

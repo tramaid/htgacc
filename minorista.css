@@ -33,7 +33,7 @@
 
 /* ---- Rubros ---------------------------------------------------------------- */
 .m-cats{margin-top:24px}
-.m-cat-row{position:relative}.m-cat-grid{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 64px)/5);gap:16px;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;scroll-snap-type:x proximity;scrollbar-width:none}.m-cat-grid::-webkit-scrollbar{display:none}.m-cat{scroll-snap-align:start}.m-cat-arrow{position:absolute;z-index:2;top:calc(50% - 62px);box-shadow:0 8px 20px -10px rgba(0,0,0,.35)}.m-cat-arrow[data-dir="-1"]{left:-22px}.m-cat-arrow[data-dir="1"]{right:-22px}.m-cat-arrow:disabled{opacity:0;pointer-events:none}
+.m-arrow{width:44px;height:44px;flex:0 0 44px;border-radius:50%;border:1px solid #d6cec7;background:#fff;color:var(--ink);display:grid;place-items:center;transition:background-color .2s,color .2s,opacity .2s}.m-arrow svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}.m-arrow:not(:disabled):hover{background:var(--ink);border-color:var(--ink);color:#fff}.m-arrow:disabled{opacity:.3;cursor:default}.m-cat-row{position:relative}.m-cat-grid{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 64px)/5);gap:16px;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;scroll-snap-type:x proximity;scrollbar-width:none}.m-cat-grid::-webkit-scrollbar{display:none}.m-cat{scroll-snap-align:start}.m-cat-arrow{position:absolute;z-index:2;top:calc(50% - 62px);box-shadow:0 8px 20px -10px rgba(0,0,0,.35)}.m-cat-arrow[data-dir="-1"]{left:-22px}.m-cat-arrow[data-dir="1"]{right:-22px}.m-cat-arrow:disabled{opacity:0;pointer-events:none}
 .m-cat{display:flex;flex-direction:column;background:var(--m-card);border-radius:18px;overflow:hidden}
 .m-cat img{width:100%;height:auto;aspect-ratio:1;object-fit:cover;transition:transform .5s var(--ease)}
 .m-cat:hover img{transform:scale(1.05)}
@@ -64,16 +64,16 @@
 .m-head h2,.m-locales h2,.m-dialog h2{font-weight:800;letter-spacing:-.035em;margin:0}
 .m-head h2{font-size:clamp(24px,2.3vw,32px);line-height:1.1}
 .m-head p{margin:6px 0 0;color:var(--muted);font-size:15px}
-.m-brand-row{display:flex;align-items:center;gap:12px}
-.m-brand-track{list-style:none;margin:0;padding:4px;scroll-padding-inline:4px;display:flex;gap:12px;flex:1;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;scroll-behavior:smooth}
-.m-brand-track::-webkit-scrollbar{display:none}
-.m-brand-track li{flex:0 0 calc((100% - 72px)/7);min-width:128px;height:96px;display:grid;place-items:center;background:#fff;border:1px solid var(--line);border-radius:16px;scroll-snap-align:start}
-.m-brand-track img{height:calc(var(--h,30px)*.82);width:auto;max-width:78%}
-.m-arrow{width:44px;height:44px;flex:0 0 44px;border-radius:50%;border:1px solid #d6cec7;background:#fff;color:var(--ink);display:grid;place-items:center;transition:background-color .2s,color .2s,opacity .2s}
-.m-arrow svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.m-arrow:not(:disabled):hover{background:var(--ink);border-color:var(--ink);color:#fff}
-.m-arrow:disabled{opacity:.3;cursor:default}
-.m-brand-row.fits .m-arrow{visibility:hidden}
+
+
+
+
+
+
+
+
+
+
 .m-ig-handle{display:inline-flex;align-items:center;gap:10px;min-height:44px;font-weight:600;white-space:nowrap}
 .m-ig-handle svg{width:26px;height:26px;color:var(--orange-display);fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .m-ig-handle:hover{text-decoration:underline;text-underline-offset:.2em}
@@ -125,7 +125,7 @@
 
 /* ---- Responsive ------------------------------------------------------------ */
 @media(max-width:1340px){.m-main{width:min(100% - 68px,1328px)}.m-cat-grid{gap:12px}.m-cat-label{font-size:15px;padding:14px 12px}.m-benefits>*{padding:6px 14px;gap:12px}}
-@media(max-width:1000px){.m-cat-grid{grid-auto-columns:calc((100% - 20px)/3);gap:10px}.m-cat-label{font-size:13px;padding:12px 10px}.m-benefits{grid-template-columns:1fr 1fr;gap:16px 0}.m-benefits>*:nth-child(2){border:0}.m-ig-grid{grid-template-columns:repeat(3,1fr)}.m-locales{grid-template-columns:1fr}.m-pins{min-height:0;justify-content:flex-start;flex-wrap:wrap}.m-pins li{align-self:auto!important}.m-news{flex-wrap:wrap}.m-news .button{margin-left:0}.m-brand-track li{flex-basis:140px}}
+@media(max-width:1000px){.m-cat-grid{grid-auto-columns:calc((100% - 20px)/3);gap:10px}.m-cat-label{font-size:13px;padding:12px 10px}.m-benefits{grid-template-columns:1fr 1fr;gap:16px 0}.m-benefits>*:nth-child(2){border:0}.m-ig-grid{grid-template-columns:repeat(3,1fr)}.m-locales{grid-template-columns:1fr}.m-pins{min-height:0;justify-content:flex-start;flex-wrap:wrap}.m-pins li{align-self:auto!important}.m-news{flex-wrap:wrap}.m-news .button{margin-left:0}}
 @media(max-width:700px){
   .m-main{width:calc(100% - 32px);padding-top:16px}
   .m-hero{border-radius:20px}
@@ -150,10 +150,10 @@
   .m-banner{min-height:330px;padding:24px;justify-content:flex-start;background-size:auto 180px;background-position:right bottom}.m-banner h2{max-width:none}
   .m-banner h2{font-size:34px;margin-bottom:16px}
   .m-head{margin:36px 0 14px;align-items:flex-start;flex-direction:column;gap:6px}
-  .m-brand-row{gap:6px}
-  .m-arrow{display:none}
-  .m-brand-track{margin:0 -16px;padding:4px 16px;scroll-padding-inline:16px}
-  .m-brand-track li{flex-basis:128px;height:80px}
+  
+  
+  
+  
   .m-ig-grid{gap:8px}
   .m-ig-grid a{border-radius:10px}
   .m-locales{margin-top:36px;padding:28px 22px}
@@ -172,7 +172,7 @@
   .m-dialog[open]{animation:fade-in .2s linear}
   .m-pins a:hover{transform:none}
   .m-cat:hover img,.m-ig-grid a:hover img{transform:none}
-  .m-brand-track{scroll-behavior:auto}
+  
 }
 
 /* ---- Locales: cuatro puntos, Arana primero (03/10/2026) -------------------- */
@@ -195,3 +195,7 @@
 @media(max-width:700px){.page-minorista .header-search{background:transparent}.page-minorista .header-search button{color:var(--ink)}.page-minorista .header-search input{border-bottom:1px solid var(--line)}}
 .page-minorista .soul-banner{border-radius:20px;margin-top:24px}
 @media(max-width:700px){.page-minorista .soul-banner{border-radius:14px;margin-top:16px}}
+/* Marquesina de marcas en minorista: logos en tarjetas blancas, como antes (04/10/2026) */
+.m-brands .m-head{display:flex;align-items:center;justify-content:space-between;gap:16px}.m-brands .marquee-toggle{margin-top:0;border-color:#d6cec7;background:#fff}
+.page-minorista .marquee-track li{padding:0;margin-right:12px;width:150px;height:96px;background:#fff;border:1px solid var(--line);border-radius:16px}.page-minorista .marquee img{height:calc(var(--h,30px)*.82);max-width:78%}
+@media(max-width:700px){.page-minorista .marquee-track li{width:124px;height:80px;margin-right:10px}.m-brands .marquee{margin:0 -16px}}
