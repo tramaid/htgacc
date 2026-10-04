@@ -176,7 +176,7 @@
   [['#cat-track', '.cat-arrow'], ['#m-cat-track', '.m-cat-arrow']].forEach(([sel, arrowSel]) => {
     const track = $(sel);
     if (!track) return;
-    const arrows = $(arrowSel);
+    const arrows = $$(arrowSel);
     const update = () => {
       const max = track.scrollWidth - track.clientWidth;
       arrows.forEach(a => { a.hidden = max <= 2; });
@@ -191,7 +191,7 @@
   });
 
   /* ---- Marquesina de marcas: botón de pausa (WCAG 2.2.2) ------------------- */
-  $('.marquee-toggle').forEach(btn => {
+  $$('.marquee-toggle').forEach(btn => {
     const marquee = btn.closest('section').querySelector('[data-marquee]');
     btn.addEventListener('click', () => {
       const paused = btn.getAttribute('aria-pressed') !== 'true';
