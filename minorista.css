@@ -33,7 +33,7 @@
 
 /* ---- Rubros ---------------------------------------------------------------- */
 .m-cats{margin-top:24px}
-.m-cat-row{position:relative}.m-cat-grid{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 64px)/5);gap:16px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scrollbar-width:none}.m-cat-grid::-webkit-scrollbar{display:none}.m-cat{scroll-snap-align:start}.m-cat-arrow{position:absolute;z-index:2;top:calc(50% - 62px);box-shadow:0 8px 20px -10px rgba(0,0,0,.35)}.m-cat-arrow[data-dir="-1"]{left:-22px}.m-cat-arrow[data-dir="1"]{right:-22px}.m-cat-arrow:disabled{opacity:0;pointer-events:none}
+.m-cat-row{position:relative}.m-cat-grid{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 64px)/5);gap:16px;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;scroll-snap-type:x proximity;scrollbar-width:none}.m-cat-grid::-webkit-scrollbar{display:none}.m-cat{scroll-snap-align:start}.m-cat-arrow{position:absolute;z-index:2;top:calc(50% - 62px);box-shadow:0 8px 20px -10px rgba(0,0,0,.35)}.m-cat-arrow[data-dir="-1"]{left:-22px}.m-cat-arrow[data-dir="1"]{right:-22px}.m-cat-arrow:disabled{opacity:0;pointer-events:none}
 .m-cat{display:flex;flex-direction:column;background:var(--m-card);border-radius:18px;overflow:hidden}
 .m-cat img{width:100%;height:auto;aspect-ratio:1;object-fit:cover;transition:transform .5s var(--ease)}
 .m-cat:hover img{transform:scale(1.05)}
@@ -183,12 +183,7 @@
 @media(max-width:700px){.m-pins{grid-template-columns:1fr}}
 
 /* ---- Encabezado claro: separa Minorista de Mayorista (03/10/2026) ---------- */
-.page-minorista .channel-bar{background:var(--m-card);color:var(--ink);border-bottom-color:var(--line)}
-.page-minorista .channel-tabs{border-color:#d6ccc2}
-.page-minorista .channel-tabs a{color:var(--muted)}
-.page-minorista .channel-tabs a:hover{color:var(--ink)}
-.page-minorista .channel-tabs a[aria-current]{background:var(--ink);color:#fff}
-.page-minorista .channel-note{color:var(--muted)}
+.page-minorista .channel-switch{background:var(--m-card);border-color:#d6ccc2}.page-minorista .channel-switch a{color:var(--muted)}.page-minorista .channel-switch a:hover{color:var(--ink);background:#e8e1da}.page-minorista .channel-switch a[aria-current]{background:var(--ink);color:#fff}
 .page-minorista .site-header{background:#fff;color:var(--ink);border-bottom:1px solid var(--line)}
 .page-minorista .site-header.is-scrolled{box-shadow:0 12px 30px -18px rgba(0,0,0,.28)}
 .page-minorista .identity-side{border-left-color:var(--line)}
