@@ -7,7 +7,7 @@
 
   /* Canales de contacto. Instagram está confirmado; el WhatsApp central se
      completa cuando HTG lo pase (formato internacional: 5491112345678). */
-  const CONTACTO = { instagram: 'htgaccesorios', whatsapp: '', email: '' }; // completar whatsapp (solo números, 549…) y email cuando lleguen
+  const CONTACTO = { instagram: 'htgaccesorios', whatsapp: '5491179009784', email: '' }; // email: completar cuando llegue
 
   /* ---- Motor de movimiento (motor TRAMA recortado) --------------------------
      Un solo requestAnimationFrame para todo lo continuo. A diferencia del motor

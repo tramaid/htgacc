@@ -11,6 +11,7 @@
   const $ = s => document.querySelector(s);
   const params = new URLSearchParams(location.search);
   const IG = 'https://ig.me/m/htgaccesorios';
+  const wa = txt => 'https://wa.me/5491179009784?text=' + encodeURIComponent(txt);
   const pag = may ? { cat: 'catalogo.html', prod: 'producto.html', inicio: 'index.html' }
                   : { cat: 'minorista-catalogo.html', prod: 'minorista-producto.html', inicio: 'minorista.html' };
   const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -55,7 +56,7 @@
     } else {
       grid.innerHTML = `<div class="shop-empty"><b>${rubro ? 'Todavía no cargamos estos productos en la web.' : 'No encontramos productos con esa búsqueda.'}</b>
         <p>Puede que los tengamos igual: escribinos y te decimos modelos y disponibilidad.</p>
-        <a class="button button-orange" href="${IG}" target="_blank" rel="noopener">Consultar por Instagram <span aria-hidden="true">→</span></a></div>`;
+        <a class="button button-orange" href="${wa('Hola HTG, quiero consultar por ' + (rubro ? R[rubro].t : q))}" target="_blank" rel="noopener">Consultar por WhatsApp <span aria-hidden="true">→</span></a></div>`;
     }
   }
 
@@ -70,11 +71,13 @@
     const r = R[p.cat] || { t: '' };
     document.title = `${p.n} · HTG Accesorios`;
     $('#pdp-crumb').innerHTML = `<a href="${pag.inicio}">Inicio</a> / <a href="${pag.cat}?categoria=${p.cat}">${esc(r.t)}</a> / <span>${esc(p.n)}</span>`;
+    const msg = wa(`Hola HTG, quiero consultar por ${p.n} (cód. ${p.cod})` + (may ? ', para compra mayorista.' : '.'));
+    const flotante = $('[data-wa]'); if (flotante) flotante.href = msg;
     const caja = may
       ? `<div class="pdp-price">${LOCK}<div><b>Precio mayorista</b><p>Los precios se ven con tu cuenta de cliente. Si todavía no tenés, pedí el alta: es rápido y sin compromiso.</p>
-          <div class="pdp-actions"><a class="button button-orange" href="alta.html?interes=${p.cat}">Hacete cliente <span aria-hidden="true">→</span></a><a class="button button-outline-dark" href="${IG}" target="_blank" rel="noopener">Consultar por Instagram</a></div></div></div>`
-      : `<div class="pdp-price">${CHAT}<div><b>Consultá precio y stock</b><p>Escribinos por Instagram y te pasamos el precio y en qué local lo tenemos. También hacemos envíos.</p>
-          <div class="pdp-actions"><a class="button button-orange" href="${IG}" target="_blank" rel="noopener">Consultar por Instagram <span aria-hidden="true">→</span></a></div></div></div>`;
+          <div class="pdp-actions"><a class="button button-orange" href="alta.html?interes=${p.cat}">Hacete cliente <span aria-hidden="true">→</span></a><a class="button button-outline-dark" href="${msg}" target="_blank" rel="noopener">Consultar por WhatsApp</a></div></div></div>`
+      : `<div class="pdp-price">${CHAT}<div><b>Consultá precio y stock</b><p>Escribinos y te pasamos el precio y en qué local lo tenemos. También hacemos envíos.</p>
+          <div class="pdp-actions"><a class="button button-orange" href="${msg}" target="_blank" rel="noopener">Consultar por WhatsApp <span aria-hidden="true">→</span></a><a class="button button-outline-dark" href="${IG}" target="_blank" rel="noopener">Instagram</a></div></div></div>`;
     ficha.innerHTML = `<div class="pdp-img"><img src="assets/productos/${esc(p.id)}.webp" alt="${esc(p.n)}" width="800" height="800"></div>
       <div class="pdp-info"><p class="pdp-brand">SOUL · Cód. ${esc(p.cod)}</p><h1>${esc(p.n)}</h1>
         <ul class="pdp-feats">${(p.r || []).map(x => `<li>${esc(x)}</li>`).join('')}</ul>${caja}
